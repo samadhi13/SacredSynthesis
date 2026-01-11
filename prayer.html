@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Contemplative Prayer Room at Still Waters Meditation: A 20-minute guided silence session blending centering prayer traditions with a sacred word and closing bell.">
     <title>Contemplative Prayer Room - Still Waters</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./styles.css">
     <style>
         /* Additional styles specific to prayer room */
         .prayer-container {
@@ -314,8 +314,8 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-        loadComponent('header.html', 'header-placeholder');
-        loadComponent('footer.html', 'footer-placeholder');
+        loadComponent('./header.html', 'header-placeholder');
+        loadComponent('./footer.html', 'footer-placeholder');
     });
 
     // Prayer Timer Functionality
@@ -402,7 +402,7 @@
 
     function playBell() {
         try {
-            const audio = new Audio('endBell.wav');
+            const audio = new Audio('./endBell.wav');
             audio.volume = 0.7; // Adjust volume (0.0 to 1.0)
             audio.play().catch(err => {
                 console.error('Audio playback failed:', err);
