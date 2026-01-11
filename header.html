@@ -1,0 +1,29 @@
+<header>
+    <div class="header-content">
+        <h1>Sacred Synthesis</h1>
+        <p class="tagline">Sit, Breathe, Be</p>
+    </div>
+    <nav class="main-nav">
+        <a href="./index.html">Home</a>
+        <a href="./prayer.html">Prayer</a>
+	<!--	<a href="./nature.html">Nature</a> -->
+    </nav>
+    <!-- Hamburger menu for mobile -->
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="hamburger"></span>
+    </button>
+</header>
+
+<script>
+    // Mobile menu toggle (same as before, but now in header.html so it loads with the header)
+    const navToggle = document.querySelector('.nav-toggle');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (navToggle && mainNav) {
+        navToggle.addEventListener('click', () => {
+            const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', !expanded);
+            mainNav.classList.toggle('open');
+        });
+    }
+</script>

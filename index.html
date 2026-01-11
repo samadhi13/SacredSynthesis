@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sacred Synthesis: Free meditation tools blending Eastern and Western contemplative traditions. Practice centering prayer, mindfulness, and more.">
+    <meta name="keywords" content="meditation, centering prayer, mindfulness, contemplative practice, Eastern meditation, Western meditation, meditation timer, prayer tools">
+    <meta name="author" content="Sacred Synthesis">
+    <meta property="og:title" content="Sacred Synthesis - Meditation Tools">
+    <meta property="og:description" content="Free meditation tools blending Eastern and Western contemplative traditions.">
+    <meta property="og:type" content="website">
+    <title>Sacred Synthesis - Meditation Tools for East & West Traditions</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<!-- Header loaded dynamically from header.html -->
+<div id="header-placeholder"></div>
+
+<main>
+    <section class="hero">
+        <h2>Welcome to Your Practice</h2>
+        <p class="hero-text">Free meditation tools thoughtfully designed to honor both Eastern and Western contemplative traditions. Choose a practice below to begin.</p>
+    </section>
+
+    <section class="tools-container">
+        <div class="tool-card">
+            <h3>Centering Prayer</h3>
+            <p>20-minute guided timer for Christian contemplative prayer in the tradition of Thomas Keating.</p>
+            <a href="./prayer.html" class="tool-button" aria-label="Begin Centering Prayer practice">Begin Practice</a>
+        </div>
+
+        <div class="tool-card">
+            <h3>Nature Soundscape</h3>
+            <p>Create your perfect natural environment with river, rain, and bird sounds for immersive meditation.</p>
+            <a href="./nature.html" class="tool-button" aria-label="Begin Nature Soundscape meditation">Begin Practice</a>
+        </div>
+    </section>
+
+    <section class="coming-soon">
+        <p>More meditation tools coming soon...</p>
+    </section>
+</main>
+
+<!-- Footer loaded dynamically from footer.html -->
+<div id="footer-placeholder"></div>
+
+<script>
+    // Load shared header and footer
+    async function loadComponent(url, placeholderId) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Network error');
+            const html = await response.text();
+            document.getElementById(placeholderId).innerHTML = html;
+        } catch (err) {
+            console.error(`Failed to load ${url}:`, err);
+            document.getElementById(placeholderId).innerHTML = `<p style="color:red; text-align:center;">Error loading component.</p>`;
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        loadComponent('./header.html', 'header-placeholder');
+        loadComponent('./footer.html', 'footer-placeholder');
+    });
+</script>
+
+</body>
+</html>

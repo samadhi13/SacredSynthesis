@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contemplative Prayer Room at Still Waters Meditation: A 20-minute guided silence session blending centering prayer traditions with a sacred word and closing bell.">
+    <title>Contemplative Prayer Room - Still Waters</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles specific to prayer room */
+        .prayer-container {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 3rem 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .prayer-container h2 {
+            color: var(--primary-dark);
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro-text {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        /* Method Section */
+        .method-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(44, 95, 122, 0.05);
+            border-radius: 12px;
+            text-align: left;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .method-section h3 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        .method-list {
+            list-style: none;
+            counter-reset: method-counter;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .method-list li {
+            counter-increment: method-counter;
+            margin-bottom: 1.2rem;
+            padding-left: 3rem;
+            position: relative;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .method-list li::before {
+            content: counter(method-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--primary);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .method-note {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-style: italic;
+            line-height: 1.7;
+        }
+
+        .closing-note {
+            margin-top: 1rem;
+            font-style: italic;
+            color: var(--primary);
+        }
+
+        /* Timer Display */
+        #timer-display {
+            font-size: 5rem;
+            font-weight: 300;
+            color: var(--primary);
+            margin: 2.5rem 0;
+            letter-spacing: 0.1em;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-family: inherit;
+        }
+
+        .controls button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .controls button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .controls button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #start-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #pause-btn {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        #reset-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        /* End Message */
+        #end-message {
+            display: none;
+            font-size: 1.5rem;
+            color: #28a745;
+            margin: 2rem 0;
+            font-weight: 500;
+            padding: 2rem;
+            background: rgba(40, 167, 69, 0.1);
+            border-radius: 12px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .instructions {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(44, 95, 122, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .instructions p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(44, 95, 122, 0.1);
+            border-radius: 3px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 100%;
+            transition: width 1s linear;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .prayer-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .prayer-container h2 {
+                font-size: 1.8rem;
+            }
+
+            #timer-display {
+                font-size: 3.5rem;
+            }
+
+            .controls button {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+
+            #sacred-input {
+                width: 100%;
+            }
+
+            .intro-text {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #timer-display {
+                font-size: 2.8rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .controls button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header loaded dynamically from header.html -->
+<div id="header-placeholder"></div>
+
+<main>
+    <section class="prayer-container">
+        <h2>Centering Prayer</h2>
+        <p class="intro-text">In the tradition of Thomas Keating and the Christian contemplative practice, centering prayer is a method of silent meditation that deepens our relationship with God through interior silence.</p>
+        
+        <div class="method-section">
+            <h3>The Method</h3>
+            <ol class="method-list">
+                <li>Choose a sacred word as the symbol of your intention to consent to God's presence and action within.</li>
+                <li>Sitting comfortably with eyes closed, settle briefly and silently introduce the sacred word.</li>
+                <li>When you become aware of thoughts, return ever-so-gently to the sacred word.</li>
+                <li>At the end of the prayer period, remain in silence with eyes closed for a couple of minutes.</li>
+            </ol>
+            <p class="method-note">Your sacred word might be "peace," "love," "silence," "stillness," "faith," or any other word that resonates with your intention.</p>
+        </div>
+
+        <div id="timer-display" role="timer" aria-live="polite">20:00</div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <div class="controls">
+            <button id="start-btn" aria-label="Start 20-minute session">Start Session</button>
+            <button id="pause-btn" aria-label="Pause timer" disabled>Pause</button>
+            <button id="reset-btn" aria-label="Reset timer">Reset</button>
+        </div>
+
+        <div id="end-message">
+            The session has ended.<br>
+            Remain in silence with eyes closed for a few moments before gently returning.
+        </div>
+
+        <div class="instructions">
+            <p><strong>Begin your practice:</strong> Press Start Session when you are ready. The timer is set for 20 minutes—the recommended duration for centering prayer. A gentle bell will sound at the end, signaling time to remain in silence for a few moments before opening your eyes and returning to your day.</p>
+            <p class="closing-note">Remember: the sacred word is not a mantra to be repeated continuously, but a gentle means of returning your attention to God whenever you notice you've become engaged with your thoughts.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer loaded dynamically from footer.html -->
+<div id="footer-placeholder"></div>
+
+<script>
+    // Load shared header and footer
+    async function loadComponent(url, placeholderId) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Network error');
+            const html = await response.text();
+            document.getElementById(placeholderId).innerHTML = html;
+        } catch (err) {
+            console.error(`Failed to load ${url}:`, err);
+            document.getElementById(placeholderId).innerHTML = `<p style="color:red; text-align:center;">Error loading component.</p>`;
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        loadComponent('header.html', 'header-placeholder');
+        loadComponent('footer.html', 'footer-placeholder');
+    });
+
+    // Prayer Timer Functionality
+    const startBtn = document.getElementById('start-btn');
+    const pauseBtn = document.getElementById('pause-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const timerDisplay = document.getElementById('timer-display');
+    const endMessage = document.getElementById('end-message');
+    const progressBar = document.getElementById('progress-bar');
+
+    const TOTAL_TIME = 20 * 60; // 20 minutes in seconds
+    let countdown = null;
+    let timeLeft = TOTAL_TIME;
+    let isRunning = false;
+    let isPaused = false;
+
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const secs = (seconds % 60).toString().padStart(2, '0');
+        return `${mins}:${secs}`;
+    }
+
+    function updateDisplay() {
+        timerDisplay.textContent = formatTime(timeLeft);
+        const progress = ((TOTAL_TIME - timeLeft) / TOTAL_TIME) * 100;
+        progressBar.style.width = `${100 - progress}%`;
+    }
+
+    function startTimer() {
+        if (isRunning && !isPaused) return;
+
+        isRunning = true;
+        isPaused = false;
+        startBtn.textContent = 'Resume';
+        startBtn.disabled = true;
+        pauseBtn.disabled = false;
+
+        countdown = setInterval(() => {
+            timeLeft--;
+            updateDisplay();
+
+            if (timeLeft <= 0) {
+                endSession();
+            }
+        }, 1000);
+    }
+
+    function pauseTimer() {
+        if (countdown) {
+            clearInterval(countdown);
+            countdown = null;
+            isPaused = true;
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+        }
+    }
+
+    function resetTimer() {
+        if (countdown) {
+            clearInterval(countdown);
+            countdown = null;
+        }
+        timeLeft = TOTAL_TIME;
+        isRunning = false;
+        isPaused = false;
+        updateDisplay();
+        endMessage.style.display = 'none';
+        startBtn.textContent = 'Start Session';
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+    }
+
+    function endSession() {
+        clearInterval(countdown);
+        countdown = null;
+        isRunning = false;
+        timeLeft = 0;
+        updateDisplay();
+        playBell();
+        endMessage.style.display = 'block';
+        startBtn.disabled = true;
+        pauseBtn.disabled = true;
+    }
+
+    function playBell() {
+        try {
+            const audio = new Audio('endBell.wav');
+            audio.volume = 0.7; // Adjust volume (0.0 to 1.0)
+            audio.play().catch(err => {
+                console.error('Audio playback failed:', err);
+            });
+        } catch (err) {
+            console.error('Audio playback failed:', err);
+        }
+    }
+
+    // Event listeners
+    startBtn.addEventListener('click', startTimer);
+    pauseBtn.addEventListener('click', pauseTimer);
+    resetBtn.addEventListener('click', resetTimer);
+
+    // Initial display
+    updateDisplay();
+</script>
+
+</body>
+</html>
